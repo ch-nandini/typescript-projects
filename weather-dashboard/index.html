@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather</title>
+  <meta name="description" content="Weather dashboard using the free Open-Meteo API, written in TypeScript." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="dist/main.js"></script>
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="toolbar">
+        <div class="search">
+          <input id="search" type="search" placeholder="Search a city…" autocomplete="off"
+                 role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions"
+                 aria-label="Search for a city" />
+          <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+        </div>
+        <button id="locate" class="icon-btn" type="button" aria-label="Use my location" title="Use my location">📍</button>
+        <div class="units" role="group" aria-label="Units">
+          <button type="button" data-units="imperial" aria-pressed="true">°F</button>
+          <button type="button" data-units="metric" aria-pressed="false">°C</button>
+        </div>
+      </div>
+      <div id="recent" class="recent"></div>
+    </header>
+
+    <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+    <div id="content" class="content"></div>
+
+    <footer class="credit">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo.com</a></footer>
+  </main>
+</body>
+</html>
