@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Typing Speed Test</title>
+  <meta name="description" content="A timed typing test with live WPM and accuracy, written in TypeScript." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="dist/main.js"></script>
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Typing Speed Test</h1>
+    </header>
+
+    <section class="bar">
+      <fieldset class="durations">
+        <legend class="sr-only">Test length</legend>
+        <label><input type="radio" name="duration" value="15" /><span>15s</span></label>
+        <label><input type="radio" name="duration" value="30" checked /><span>30s</span></label>
+        <label><input type="radio" name="duration" value="60" /><span>60s</span></label>
+      </fieldset>
+      <div class="hud" aria-live="off">
+        <div><strong id="timer">30</strong><span>sec</span></div>
+        <div><strong id="live-wpm">–</strong><span>wpm</span></div>
+      </div>
+    </section>
+
+    <!-- Kept outside #text: focusing an input inside an overflow:hidden box makes the browser scroll that box. -->
+    <input id="input" class="sr-only" type="text" autocomplete="off" autocapitalize="off"
+           autocorrect="off" spellcheck="false" aria-label="Type the text shown" />
+    <div id="text" class="text" aria-label="Text to type">
+      <div id="text-inner" class="text__inner"></div>
+    </div>
+    <p id="hint" class="hint"></p>
+
+    <section id="results" class="results" aria-live="polite" hidden>
+      <div class="big"><strong id="r-wpm">0</strong><span>WPM</span></div>
+      <div><strong id="r-acc">0%</strong><span>Accuracy</span></div>
+      <div><strong id="r-raw">0</strong><span>Raw WPM</span></div>
+      <div><strong id="r-chars">0 / 0</strong><span>Correct / wrong chars</span></div>
+      <div><strong id="r-best">0</strong><span>Personal best</span></div>
+    </section>
+
+    <button id="restart" class="restart" type="button">↻ Restart</button>
+  </main>
+</body>
+</html>

@@ -1,0 +1,122 @@
+:root {
+  --bg: #fbfaf7;
+  --surface: #ffffff;
+  --ink: #232220;
+  --muted: #9b978e;
+  --faint: #c9c5bb;
+  --line: #e7e3da;
+  --accent: #e0a100;
+  --bad: #d94a38;
+  --radius: 14px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1b1c1f;
+    --surface: #232428;
+    --ink: #e9e7e2;
+    --muted: #7d7f86;
+    --faint: #50525a;
+    --line: #303238;
+    --accent: #f3c13a;
+    --bad: #ff6b57;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.app { width: min(860px, 100% - 32px); margin: 0 auto; padding: 32px 0 48px; }
+.back { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+.back:hover { color: var(--ink); }
+h1 { margin: 8px 0 24px; font-size: 1.9rem; letter-spacing: -0.02em; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+
+.durations { border: 0; margin: 0; padding: 4px; display: flex; gap: 4px; background: var(--surface); border-radius: 999px; border: 1px solid var(--line); }
+.durations input { position: absolute; opacity: 0; }
+.durations span { display: block; padding: 6px 14px; border-radius: 999px; cursor: pointer; color: var(--muted); font-weight: 500; }
+.durations input:checked + span { background: var(--ink); color: var(--bg); }
+.durations input:focus-visible + span { outline: 2px solid var(--accent); }
+
+.hud { display: flex; gap: 24px; }
+.hud div { display: flex; align-items: baseline; gap: 6px; }
+.hud strong { font: 600 2rem "JetBrains Mono", monospace; color: var(--accent); min-width: 2ch; text-align: right; }
+.hud span { color: var(--muted); font-size: 0.9rem; }
+
+.text {
+  position: relative;
+  height: calc(1.9rem * 1.8 * 3); /* exactly three lines */
+  overflow: hidden;
+  cursor: text;
+  font: 400 1.9rem / 1.8 "JetBrains Mono", monospace;
+  color: var(--faint);
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+          mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+.text__inner { transition: transform 0.15s ease-out; word-break: break-word; }
+.text:not(.focused) .text__inner { filter: blur(0.5px); opacity: 0.7; }
+
+.ch { position: relative; }
+.ch.ok { color: var(--ink); }
+.ch.bad { color: var(--bad); background: color-mix(in srgb, var(--bad) 14%, transparent); border-radius: 3px; }
+.text.focused .ch.caret::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 0.25em;
+  bottom: 0.25em;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: blink 1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.hint { color: var(--muted); font-size: 0.9rem; margin: 14px 0 24px; min-height: 1.4em; }
+
+.results {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.results[hidden] { display: none; }
+.results div { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 4px; }
+.results strong { font: 600 1.5rem "JetBrains Mono", monospace; }
+.results span { color: var(--muted); font-size: 0.8rem; }
+.results .big strong { font-size: 2.6rem; color: var(--accent); }
+
+.restart {
+  font: 500 1rem "Inter", sans-serif;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+.restart:hover { border-color: var(--accent); }
+.restart:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+@media (max-width: 680px) {
+  .text { font-size: 1.3rem; height: calc(1.3rem * 1.8 * 3); }
+  .results { grid-template-columns: 1fr 1fr; }
+  .results .big { grid-column: 1 / -1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
